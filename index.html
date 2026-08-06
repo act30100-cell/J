@@ -161,7 +161,19 @@ html,body{
 <div class="counter" id="counter">1 / 15</div>
 <div class="hint" id="hint"><span class="arrows"><span class="a1">‹</span><span class="a2">›</span></span>좌우로 넘겨보세요</div>
 
+<noscript>
+  <div style="position:fixed;inset:0;background:#EDE7DF;display:flex;align-items:center;justify-content:center;
+              padding:24px;text-align:center;font-size:14px;color:#231815;line-height:1.7;">
+    이 페이지는 자바스크립트가 꺼져 있으면 보이지 않습니다.<br>브라우저의 자바스크립트를 켜 주세요.
+  </div>
+</noscript>
+<div id="fatal" style="display:none;position:fixed;inset:0;z-index:99;background:#EDE7DF;
+     align-items:center;justify-content:center;padding:28px;text-align:center;
+     font-size:13.5px;color:#231815;line-height:1.8;"></div>
+
 <script>
+try {
+
 const TOTAL = 15;
 const track = document.getElementById('track');
 const pager = document.getElementById('pager');
@@ -170,9 +182,14 @@ for (let i = 1; i <= TOTAL; i++) {
   const n = String(i).padStart(2, '0');
   const slide = document.createElement('div');
   slide.className = 'slide loading';
-  slide.innerHTML = `<div class="skel"></div><img src="images/slide-${n}.webp" alt="슬라이드 ${i}" draggable="false" loading="eager" decoding="async">`;
+  slide.innerHTML = `<div class="skel"></div><img src="images/slide-${n}.jpg" alt="슬라이드 ${i}" draggable="false" loading="eager" decoding="async">`;
   const img = slide.querySelector('img');
   img.addEventListener('load', () => slide.classList.replace('loading','ready'), {once:true});
+  img.addEventListener('error', () => {
+    slide.classList.replace('loading','ready');
+    slide.innerHTML = `<div style="color:#231815;font-size:13px;text-align:center;padding:20px;line-height:1.6;">
+      이미지를 불러오지 못했습니다<br><span style="color:#999;font-size:11px;">images/slide-${n}.jpg</span></div>`;
+  }, {once:true});
   track.appendChild(slide);
 
   const bar = document.createElement('i');
@@ -241,6 +258,26 @@ function dismissHint(){
 track.addEventListener('scroll', dismissHint, { passive:true, once:true });
 document.getElementById('nextBtn').addEventListener('click', dismissHint, { once:true });
 setTimeout(dismissHint, 6000);
+
+/* 감시: 4초 뒤에도 이미지가 하나도 안 뜨면 화면에 원인을 바로 표시 */
+setTimeout(() => {
+  const okCount = [...document.querySelectorAll('.slide img')]
+    .filter(im => im.complete && im.naturalWidth > 0).length;
+  if (okCount === 0) {
+    const fatal = document.getElementById('fatal');
+    fatal.style.display = 'flex';
+    fatal.innerHTML = '이미지가 로드되지 않았습니다.<br>' +
+      '<span style="color:#999;">images 폴더가 index.html과 같은 위치에 올라갔는지 확인해 주세요.</span><br><br>' +
+      '<span style="color:#ED7D31;font-weight:700;">시도한 경로: images/slide-01.jpg</span>';
+  }
+}, 4000);
+
+} catch (err) {
+  const fatal = document.getElementById('fatal');
+  fatal.style.display = 'flex';
+  fatal.innerHTML = '페이지 로딩 중 오류가 발생했습니다.<br><span style="color:#999;font-size:12px;">' +
+    String(err && err.message || err) + '</span>';
+}
 </script>
 </body>
 </html>
