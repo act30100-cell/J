@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>퇴직금 규정, 만들어만 두면 될까요 | 한화생명 WM센터</title>
+
+<!-- Open Graph / 카카오톡 링크 미리보기 -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="퇴직금 규정, 만들어만 두면 될까요">
+<meta property="og:description" content="임원 퇴직금의 비용 인정 요건과 재원 마련 | 한화생명 WM센터">
+<meta property="og:image" content="https://act30100-cell.github.io/J/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://act30100-cell.github.io/J/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#ED7D31">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{
+  width:100%;height:100%;overflow:hidden;background:#EDE7DF;
+  font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+  overscroll-behavior:none;
+}
+
+/* ── 스와이프 트랙 ─────────────────────────── */
+.viewport{
+  position:fixed; inset:0;
+  display:flex; align-items:center; justify-content:center;
+}
+.track{
+  height:100%; max-height:100vh;
+  display:flex;
+  overflow-x:auto; overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.track::-webkit-scrollbar{ display:none; }
+.slide{
+  flex:0 0 100vw;
+  scroll-snap-align:center;
+  scroll-snap-stop:always;
+  display:flex; align-items:center; justify-content:center;
+  height:100%;
+  position:relative;
+}
+.slide img{
+  display:block;
+  max-height:96%; max-width:94%;
+  width:auto; height:auto;
+  object-fit:contain;
+  user-select:none; -webkit-user-drag:none;
+  background:#fff;
+  border-radius:3px;
+  box-shadow:0 6px 28px rgba(0,0,0,.18), 0 1.5px 5px rgba(0,0,0,.10);
+}
+
+/* ── 상단 페이지 인디케이터 ───────────────── */
+.pager{
+  position:fixed; top:0; left:0; right:0; z-index:40;
+  display:flex; gap:4px; padding:10px 12px 0;
+  padding-top:calc(10px + env(safe-area-inset-top));
+}
+.pager i{
+  flex:1; height:3px; border-radius:2px; background:rgba(35,24,21,.14);
+  overflow:hidden;
+}
+.pager i b{
+  display:block; height:100%; width:0%; background:#ED7D31;
+  transition:width .25s ease;
+}
+.pager i.done b{ width:100%; }
+
+/* ── 좌우 넘김 버튼(데스크톱) ──────────────── */
+.nav{
+  position:fixed; top:50%; transform:translateY(-50%); z-index:35;
+  width:44px; height:44px; border-radius:50%;
+  background:#fff; color:#231815;
+  box-shadow:0 3px 14px rgba(0,0,0,.16);
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; cursor:pointer; border:none;
+  transition:opacity .2s, transform .15s;
+}
+.nav:hover{ transform:translateY(-50%) scale(1.06); }
+.nav:active{ transform:translateY(-50%) scale(.96); }
+.nav.prev{ left:14px; }
+.nav.next{ right:14px; }
+.nav[disabled]{ opacity:0; pointer-events:none; }
+@media (hover:none){ .nav{ display:none; } }
+
+/* ── 하단 카운터 ──────────────────────────── */
+.counter{
+  position:fixed; left:50%; bottom:calc(16px + env(safe-area-inset-bottom));
+  transform:translateX(-50%); z-index:35;
+  background:rgba(35,24,21,.68); color:#fff;
+  font-size:12.5px; font-weight:600; letter-spacing:.02em;
+  padding:5px 12px; border-radius:20px;
+  font-variant-numeric:tabular-nums;
+}
+
+/* ── 첫 화면 스와이프 힌트 ────────────────── */
+.hint{
+  position:fixed; left:50%; bottom:calc(56px + env(safe-area-inset-bottom));
+  transform:translateX(-50%); z-index:36;
+  display:flex; align-items:center; gap:8px;
+  background:rgba(35,24,21,.72); backdrop-filter:blur(3px);
+  color:#fff; font-size:13.5px; font-weight:600; letter-spacing:.01em;
+  padding:9px 16px; border-radius:24px;
+  opacity:1; transition:opacity .5s ease;
+  pointer-events:none;
+  animation:hintPulse 1.6s ease-in-out infinite;
+}
+.hint .a1,.hint .a2{ color:#ED7D31; }
+.hint.hide{ opacity:0; }
+.hint .arrows{ display:flex; gap:3px; font-size:14px; }
+.hint .a1{ animation:arrowSlide 1.6s ease-in-out infinite; }
+.hint .a2{ animation:arrowSlide 1.6s ease-in-out infinite; animation-delay:.15s; }
+@keyframes hintPulse{
+  0%,100%{ opacity:1; }
+  50%{ opacity:.55; }
+}
+@keyframes arrowSlide{
+  0%,100%{ transform:translateX(0); opacity:.5; }
+  50%{ transform:translateX(3px); opacity:1; }
+}
+
+/* ── 로딩 스켈레톤 ────────────────────────── */
+.slide.loading img{ visibility:hidden; }
+.slide .skel{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  height:96%; aspect-ratio:2152/3041; max-width:94%;
+  border-radius:3px;
+  box-shadow:0 6px 28px rgba(0,0,0,.12);
+  background:
+    linear-gradient(100deg, #eee 30%, #f6f6f6 50%, #eee 70%);
+  background-size:200% 100%;
+  animation:shimmer 1.3s ease infinite;
+}
+.slide.ready .skel{ display:none; }
+@keyframes shimmer{
+  0%{ background-position:200% 0; }
+  100%{ background-position:-200% 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="pager" id="pager"></div>
+
+<div class="viewport">
+  <div class="track" id="track">
+    <!-- slides injected by JS -->
+  </div>
+</div>
+
+<button class="nav prev" id="prevBtn" aria-label="이전">‹</button>
+<button class="nav next" id="nextBtn" aria-label="다음">›</button>
+
+<div class="counter" id="counter">1 / 15</div>
+<div class="hint" id="hint"><span class="arrows"><span class="a1">‹</span><span class="a2">›</span></span>좌우로 넘겨보세요</div>
+
+<script>
+const TOTAL = 15;
+const track = document.getElementById('track');
+const pager = document.getElementById('pager');
+
+for (let i = 1; i <= TOTAL; i++) {
+  const n = String(i).padStart(2, '0');
+  const slide = document.createElement('div');
+  slide.className = 'slide loading';
+  slide.innerHTML = `<div class="skel"></div><img src="images/slide-${n}.webp" alt="슬라이드 ${i}" draggable="false" loading="eager" decoding="async">`;
+  const img = slide.querySelector('img');
+  img.addEventListener('load', () => slide.classList.replace('loading','ready'), {once:true});
+  track.appendChild(slide);
+
+  const bar = document.createElement('i');
+  bar.innerHTML = '<b></b>';
+  pager.appendChild(bar);
+}
+
+const bars = [...pager.children];
+const slides = [...track.children];
+let current = 0;
+
+function paint(idx){
+  bars.forEach((b,i)=>{
+    b.classList.toggle('done', i < idx);
+    b.querySelector('b').style.width = i === idx ? '100%' : (i < idx ? '100%' : '0%');
+  });
+  document.getElementById('counter').textContent = (idx+1) + ' / ' + TOTAL;
+  document.getElementById('prevBtn').disabled = idx === 0;
+  document.getElementById('nextBtn').disabled = idx === TOTAL-1;
+}
+paint(0);
+
+// 버튼/키보드로 이동시키는 동안에는 스크롤 이벤트 기반 보정을 잠가
+// 애니메이션 중간 지점을 "실제 위치"로 오인하는 경쟁 상태를 막는다.
+let programmatic = false, programmaticTimer;
+function goTo(idx, smooth=true){
+  idx = Math.max(0, Math.min(TOTAL-1, idx));
+  current = idx;
+  paint(idx);
+  programmatic = true;
+  clearTimeout(programmaticTimer);
+  programmaticTimer = setTimeout(() => { programmatic = false; }, 500);
+  track.scrollTo({ left: idx * track.clientWidth, behavior: smooth ? 'smooth' : 'auto' });
+}
+
+let scrollTimer;
+track.addEventListener('scroll', () => {
+  clearTimeout(scrollTimer);
+  scrollTimer = setTimeout(() => {
+    if (programmatic) return;   // 버튼 이동 중이면 손가락 스와이프가 아니므로 무시
+    const idx = Math.round(track.scrollLeft / track.clientWidth);
+    if (idx !== current) { current = idx; }
+    paint(current);
+  }, 80);
+}, { passive:true });
+
+document.getElementById('prevBtn').addEventListener('click', () => goTo(current-1));
+document.getElementById('nextBtn').addEventListener('click', () => goTo(current+1));
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') goTo(current+1);
+  if (e.key === 'ArrowLeft') goTo(current-1);
+});
+
+window.addEventListener('resize', () => goTo(current, false));
+
+/* 스와이프 힌트: 처음 한 번 실제로 넘기면 즉시 사라짐 */
+const hint = document.getElementById('hint');
+let hintGone = false;
+function dismissHint(){
+  if (hintGone) return;
+  hintGone = true;
+  hint.classList.add('hide');
+  setTimeout(()=> hint.remove(), 600);
+}
+track.addEventListener('scroll', dismissHint, { passive:true, once:true });
+document.getElementById('nextBtn').addEventListener('click', dismissHint, { once:true });
+setTimeout(dismissHint, 6000);
+</script>
+</body>
+</html>
